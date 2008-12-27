@@ -446,3 +446,473 @@ Rendering _list_inline_adapter
 Rendered _messages (1.3ms)
 Rendered _list_inline_adapter (17.7ms)
 Completed in 243ms (View: 19, DB: 0) | 200 OK [http://localhost/programmers/4/edit?_method=get&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&parent_controller=assignments&adapter=_list_inline_adapter]
+ActiveScaffold: extending RESTful routes for programmers
+ActiveScaffold: extending RESTful routes for projects
+ActiveScaffold: extending RESTful routes for assignments
+  [4;36;1mSQL (2.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mAssignment Columns (7.3ms)[0m   [0mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#new (for 127.0.0.1 at 2008-12-26 22:12:14) [GET]
+  Parameters: {"adapter"=>"_list_inline_adapter"}
+  [4;36;1mProgrammer Columns (6.8ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mProject Columns (14.9ms)[0m   [0mSHOW FIELDS FROM `projects`[0m
+Rendered _form_association_header (14.7ms)
+Rendered _form_attribute (4.0ms)
+Rendered _form_attribute (22.8ms)
+Rendered _form_association_record (87.9ms)
+  [4;36;1mSQL (12.4ms)[0m   [0;1mSELECT count(*) AS count_all FROM `programmers` [0m
+  [4;35;1mProgrammer Load (2.7ms)[0m   [0mSELECT * FROM `programmers` [0m
+Rendered _form_association_footer (76.1ms)
+Rendered _horizontal_subform (280.6ms)
+Rendered _form_association (330.8ms)
+Rendered _form_association_header (32.2ms)
+Rendered _form_attribute (11.5ms)
+Rendered _form_association_record (37.5ms)
+  [4;36;1mSQL (4.7ms)[0m   [0;1mSELECT count(*) AS count_all FROM `projects` [0m
+  [4;35;1mProject Load (13.3ms)[0m   [0mSELECT * FROM `projects` [0m
+Rendered _form_association_footer (46.9ms)
+Rendered _horizontal_subform (169.1ms)
+Rendered _form_association (198.8ms)
+Rendered _form (634.9ms)
+Rendered _create_form (746.4ms)
+Rendering _list_inline_adapter
+Rendered _messages (1.2ms)
+Rendered _list_inline_adapter (41.7ms)
+Completed in 1572ms (View: 60, DB: 0) | 200 OK [http://localhost/assignments/new?_method=get&adapter=_list_inline_adapter]
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mAssignment Columns (4.4ms)[0m   [0mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#edit_associated (for 127.0.0.1 at 2008-12-26 22:12:32) [GET]
+  Parameters: {"association"=>"project", "associated_id"=>"2"}
+  [4;36;1mProgrammer Columns (3.8ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mProject Columns (4.4ms)[0m   [0mSHOW FIELDS FROM `projects`[0m
+  [4;36;1mProject Load (1.5ms)[0m   [0;1mSELECT * FROM `projects` WHERE (`projects`.`id` = 2) [0m
+Rendering assignments/edit_associated.rjs
+Rendered _form_attribute (3.3ms)
+Rendered _form_association_record (22.3ms)
+Completed in 528ms (View: 40, DB: 15) | 200 OK [http://localhost/assignments/edit_associated?_method=get&associated_id=2&association=project]
+  [4;35;1mSQL (1.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mAssignment Columns (4.6ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#edit_associated (for 127.0.0.1 at 2008-12-26 22:12:34) [GET]
+  Parameters: {"association"=>"programmer", "associated_id"=>"11"}
+  [4;35;1mProgrammer Columns (3.7ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProject Columns (3.9ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+  [4;35;1mProgrammer Load (3.2ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` = 11) [0m
+Rendering assignments/edit_associated.rjs
+Rendered _form_attribute (2.9ms)
+Rendered _form_attribute (0.3ms)
+Rendered _form_association_record (28.3ms)
+Completed in 399ms (View: 46, DB: 17) | 200 OK [http://localhost/assignments/edit_associated?_method=get&associated_id=11&association=programmer]
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mAssignment Columns (8.2ms)[0m   [0mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#create (for 127.0.0.1 at 2008-12-26 22:12:36) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "associated_id"=>"11", "record"=>{"programmer"=>{"id"=>"11", "last_name"=>"ProgrammerLast_11", "first_name"=>"ProgrammerFirst_11"}, "project"=>{"id"=>"2", "project_name"=>"Project_2"}}}
+  [4;36;1mProgrammer Columns (3.6ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mProject Columns (6.6ms)[0m   [0mSHOW FIELDS FROM `projects`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mProgrammer Load (0.9ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` = 11) [0m
+  [4;36;1mProject Load (0.8ms)[0m   [0;1mSELECT * FROM `projects` WHERE (`projects`.`id` = 2) [0m
+  [4;35;1mAssignment Create (2.4ms)[0m   [0mINSERT INTO `assignments` (`project_id`, `programmer_id`) VALUES(2, 11)[0m
+  [4;36;1mSQL (18.6ms)[0m   [0;1mCOMMIT[0m
+Rendering assignments/create.rjs
+Rendered _list_actions (28.3ms)
+Rendered _list_record (74.4ms)
+Completed in 700ms (View: 97, DB: 43) | 200 OK [http://localhost/assignments]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mAssignment Columns (3.8ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#row (for 127.0.0.1 at 2008-12-26 22:12:41) [GET]
+  Parameters: {"authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "id"=>"1054583384"}
+  [4;35;1mProgrammer Columns (14.3ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProject Columns (18.8ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+  [4;35;1mAssignment Load (2.3ms)[0m   [0mSELECT * FROM `assignments` WHERE (`assignments`.`id` = 1054583384) [0m
+  [4;36;1mProgrammer Load (5.8ms)[0m   [0;1mSELECT * FROM `programmers` WHERE (`programmers`.`id` = 4) [0m
+  [4;35;1mProject Load (10.1ms)[0m   [0mSELECT * FROM `projects` WHERE (`projects`.`id` = 1) [0m
+Rendered _list_actions (43.9ms)
+Rendered _list_record (219.1ms)
+Completed in 1068ms (View: 245, DB: 56) | 200 OK [http://localhost/assignments/1054583384/row?_method=get&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041]
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mAssignment Columns (5.5ms)[0m   [0mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#row (for 127.0.0.1 at 2008-12-26 22:12:45) [GET]
+  Parameters: {"authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "id"=>"1054583385"}
+  [4;36;1mProgrammer Columns (3.7ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mProject Columns (3.6ms)[0m   [0mSHOW FIELDS FROM `projects`[0m
+  [4;36;1mAssignment Load (1.3ms)[0m   [0;1mSELECT * FROM `assignments` WHERE (`assignments`.`id` = 1054583385) [0m
+  [4;35;1mProgrammer Load (0.8ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` = 10) [0m
+  [4;36;1mProject Load (0.8ms)[0m   [0;1mSELECT * FROM `projects` WHERE (`projects`.`id` = 2) [0m
+Rendered _list_actions (13.4ms)
+Rendered _list_record (55.0ms)
+Completed in 381ms (View: 65, DB: 16) | 200 OK [http://localhost/assignments/1054583385/row?_method=get&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mAssignment Columns (3.9ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#update_table (for 127.0.0.1 at 2008-12-26 22:12:47) [GET]
+  Parameters: {"authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "page"=>"1"}
+  [4;35;1mProgrammer Columns (5.4ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProject Columns (6.6ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+  [4;35;1mSQL (6.0ms)[0m   [0mSELECT count(DISTINCT `assignments`.id) AS count_all FROM `assignments` LEFT OUTER JOIN `programmers` ON `programmers`.id = `assignments`.programmer_id LEFT OUTER JOIN `projects` ON `projects`.id = `assignments`.project_id [0m
+  [4;36;1mAssignment Load (1.3ms)[0m   [0;1mSELECT `assignments`.* FROM `assignments` ORDER BY assignments.`id` ASC LIMIT 0, 15[0m
+  [4;35;1mProgrammer Load (0.8ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` IN (11,6,7,8,1,2,3,10,5)) [0m
+  [4;36;1mProject Load (1.1ms)[0m   [0;1mSELECT * FROM `projects` WHERE (`projects`.`id` IN (6,7,8,9,3,10,4,5)) [0m
+Rendered _list_column_headings (26.3ms)
+Rendered _messages (1.5ms)
+Rendered _list_actions (12.5ms)
+Rendered _list_record (43.3ms)
+Rendered _list_actions (11.6ms)
+Rendered _list_record (33.2ms)
+Rendered _list_actions (18.1ms)
+Rendered _list_record (37.8ms)
+Rendered _list_actions (12.9ms)
+Rendered _list_record (32.0ms)
+Rendered _list_actions (10.3ms)
+Rendered _list_record (32.5ms)
+Rendered _list_actions (11.6ms)
+Rendered _list_record (38.4ms)
+Rendered _list_actions (15.6ms)
+Rendered _list_record (33.7ms)
+Rendered _list_actions (10.7ms)
+Rendered _list_record (31.3ms)
+Rendered _list_actions (11.3ms)
+Rendered _list_record (35.6ms)
+Rendered _list_actions (16.5ms)
+Rendered _list_record (33.4ms)
+Rendered _list_actions (15.6ms)
+Rendered _list_record (36.4ms)
+Rendered _list_actions (12.6ms)
+Rendered _list_record (34.8ms)
+Rendered _list_actions (16.3ms)
+Rendered _list_record (46.8ms)
+Rendered _list_actions (10.7ms)
+Rendered _list_record (47.1ms)
+Rendered _list_actions (12.3ms)
+Rendered _list_record (34.0ms)
+Rendered _list_pagination_links (40.0ms)
+Rendered _list (683.3ms)
+Completed in 1282ms (View: 698, DB: 26) | 200 OK [http://localhost/assignments/update_table?authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&page=1&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mAssignment Columns (6.5ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#update_table (for 127.0.0.1 at 2008-12-26 22:12:54) [GET]
+  Parameters: {"authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "page"=>"2"}
+  [4;35;1mProgrammer Columns (5.0ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProject Columns (3.4ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSELECT count(DISTINCT `assignments`.id) AS count_all FROM `assignments` LEFT OUTER JOIN `programmers` ON `programmers`.id = `assignments`.programmer_id LEFT OUTER JOIN `projects` ON `projects`.id = `assignments`.project_id [0m
+  [4;36;1mAssignment Load (1.3ms)[0m   [0;1mSELECT `assignments`.* FROM `assignments` ORDER BY assignments.`id` ASC LIMIT 15, 15[0m
+  [4;35;1mProgrammer Load (0.8ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` IN (9,1,2,3,4,5)) [0m
+  [4;36;1mProject Load (0.8ms)[0m   [0;1mSELECT * FROM `projects` WHERE (`projects`.`id` IN (6,8,9,1,2,4)) [0m
+Rendered _list_column_headings (16.5ms)
+Rendered _messages (8.1ms)
+Rendered _list_actions (17.1ms)
+Rendered _list_record (39.1ms)
+Rendered _list_actions (10.4ms)
+Rendered _list_record (31.5ms)
+Rendered _list_actions (10.3ms)
+Rendered _list_record (37.6ms)
+Rendered _list_actions (14.2ms)
+Rendered _list_record (33.6ms)
+Rendered _list_actions (18.3ms)
+Rendered _list_record (37.4ms)
+Rendered _list_actions (13.0ms)
+Rendered _list_record (35.9ms)
+Rendered _list_actions (9.2ms)
+Rendered _list_record (33.5ms)
+Rendered _list_actions (17.0ms)
+Rendered _list_record (38.1ms)
+Rendered _list_actions (11.1ms)
+Rendered _list_record (60.3ms)
+Rendered _list_actions (12.0ms)
+Rendered _list_record (54.7ms)
+Rendered _list_actions (21.8ms)
+Rendered _list_record (41.7ms)
+Rendered _list_actions (18.6ms)
+Rendered _list_record (56.4ms)
+Rendered _list_actions (10.8ms)
+Rendered _list_record (32.7ms)
+Rendered _list_actions (11.0ms)
+Rendered _list_record (30.6ms)
+Rendered _list_actions (11.8ms)
+Rendered _list_record (38.1ms)
+Rendered _list_pagination_links (208.3ms)
+Rendered _list (885.9ms)
+Completed in 1255ms (View: 900, DB: 20) | 200 OK [http://localhost/assignments/update_table?authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&page=2&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041]
+  [4;35;1mSQL (1.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mAssignment Columns (6.7ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+
+
+Processing AssignmentsController#update_table (for 127.0.0.1 at 2008-12-26 22:12:56) [GET]
+  Parameters: {"authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "page"=>"3"}
+  [4;35;1mProgrammer Columns (5.1ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProject Columns (4.3ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSELECT count(DISTINCT `assignments`.id) AS count_all FROM `assignments` LEFT OUTER JOIN `programmers` ON `programmers`.id = `assignments`.programmer_id LEFT OUTER JOIN `projects` ON `projects`.id = `assignments`.project_id [0m
+  [4;36;1mAssignment Load (3.3ms)[0m   [0;1mSELECT `assignments`.* FROM `assignments` ORDER BY assignments.`id` ASC LIMIT 30, 15[0m
+  [4;35;1mProgrammer Load (3.6ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` IN (11,10,4)) [0m
+  [4;36;1mProject Load (1.1ms)[0m   [0;1mSELECT * FROM `projects` WHERE (`projects`.`id` IN (1,2)) [0m
+Rendered _list_column_headings (17.1ms)
+Rendered _messages (0.5ms)
+Rendered _list_actions (14.2ms)
+Rendered _list_record (50.0ms)
+Rendered _list_actions (10.9ms)
+Rendered _list_record (48.9ms)
+Rendered _list_actions (17.2ms)
+Rendered _list_record (36.8ms)
+Rendered _list_pagination_links (24.2ms)
+Rendered _list (218.6ms)
+Completed in 627ms (View: 230, DB: 27) | 200 OK [http://localhost/assignments/update_table?authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&page=3&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041]
+  [4;35;1mSQL (1.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (3.4ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#index (for 127.0.0.1 at 2008-12-26 22:13:09) [GET]
+  [4;35;1mSQL (8.6ms)[0m   [0mSELECT count(DISTINCT `projects`.id) AS count_all FROM `projects` LEFT OUTER JOIN `assignments` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `programmers` ON (`programmers`.`id` = `assignments`.`programmer_id`) [0m
+  [4;36;1mProject Load (3.2ms)[0m   [0;1mSELECT `projects`.* FROM `projects` ORDER BY projects.`id` ASC LIMIT 0, 15[0m
+  [4;35;1mAssignment Load (1.6ms)[0m   [0mSELECT `assignments`.* FROM `assignments` WHERE (`assignments`.project_id IN (1,2,3,4,5,6,7,8,9,10)) [0m
+  [4;36;1mAssignment Columns (3.7ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+  [4;35;1mProgrammer Columns (5.9ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProgrammer Load (1.6ms)[0m   [0;1mSELECT * FROM `programmers` WHERE (`programmers`.`id` IN (6,11,7,8,9,1,2,3,10,4,5)) [0m
+Rendering template within layouts/projects
+Rendering projects/list
+Rendered _list_header (37.5ms)
+Rendered _list_column_headings (52.8ms)
+Rendered _messages (1.6ms)
+Rendered _list_actions (45.6ms)
+Rendered _list_record (92.7ms)
+Rendered _list_actions (20.5ms)
+Rendered _list_record (60.7ms)
+Rendered _list_actions (27.2ms)
+Rendered _list_record (52.7ms)
+Rendered _list_actions (21.9ms)
+Rendered _list_record (48.3ms)
+Rendered _list_actions (28.4ms)
+Rendered _list_record (52.2ms)
+Rendered _list_actions (21.1ms)
+Rendered _list_record (44.3ms)
+Rendered _list_actions (27.2ms)
+Rendered _list_record (54.5ms)
+Rendered _list_actions (31.9ms)
+Rendered _list_record (56.3ms)
+Rendered _list_actions (32.3ms)
+Rendered _list_record (46.3ms)
+Rendered _list_actions (32.6ms)
+Rendered _list_record (52.4ms)
+Rendered _list (1061.0ms)
+Completed in 1551ms (View: 1178, DB: 30) | 200 OK [http://localhost/projects]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (3.4ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#show (for 127.0.0.1 at 2008-12-26 22:13:24) [GET]
+  Parameters: {"adapter"=>"_list_inline_adapter", "id"=>"2"}
+  [4;35;1mProject Load (0.9ms)[0m   [0mSELECT * FROM `projects` WHERE (`projects`.`id` = 2) [0m
+  [4;36;1mProgrammer Columns (4.7ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mSQL (3.2ms)[0m   [0mSELECT count(*) AS count_all FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 2)) [0m
+  [4;36;1mProgrammer Load (2.4ms)[0m   [0;1mSELECT `programmers`.* FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 2)) [0m
+Rendered _show_columns (81.4ms)
+Rendered _show (99.9ms)
+Rendering _list_inline_adapter
+Rendered _messages (1.2ms)
+Rendered _list_inline_adapter (16.7ms)
+Completed in 165ms (View: 18, DB: 0) | 200 OK [http://localhost/projects/2?_method=get&adapter=_list_inline_adapter]
+  [4;35;1mSQL (1.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (4.9ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#row (for 127.0.0.1 at 2008-12-26 22:13:27) [GET]
+  Parameters: {"id"=>"2"}
+  [4;35;1mProject Load (0.8ms)[0m   [0mSELECT * FROM `projects` WHERE (`projects`.`id` = 2) [0m
+  [4;36;1mProgrammer Columns (4.8ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSELECT count(*) AS count_all FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 2)) [0m
+  [4;36;1mProgrammer Load (0.7ms)[0m   [0;1mSELECT `programmers`.* FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 2)) [0m
+Rendered _list_actions (17.0ms)
+Rendered _list_record (109.9ms)
+Completed in 176ms (View: 132, DB: 13) | 200 OK [http://localhost/projects/2/row?_method=get]
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (6.9ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#nested (for 127.0.0.1 at 2008-12-26 22:13:31) [GET]
+  Parameters: {"adapter"=>"_list_inline_adapter", "id"=>"5", "associations"=>"programmers"}
+  [4;35;1mProject Load (4.3ms)[0m   [0mSELECT * FROM `projects` WHERE (`projects`.`id` = 5) [0m
+  [4;36;1mProgrammer Columns (4.2ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+DEPRECATION WARNING: render_component_as_string is deprecated and will be removed from Rails 2.3 (Please install render_component plugin from http://github.com/rails/render_component/tree/master). (called from __send__ at /usr/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/components.rb:68)
+  [4;35;1mSQL (1.8ms)[0m   [0mSHOW TABLES[0m
+Start rendering component ({:controller=>"programmers", :params=>{:eid=>"e914074edfcd7f90213dc7e91b0dfd7c", :parent_column=>"programmers", :nested=>true, :parent_model=>Project(id: integer, project_name: string)}, :action=>"table"}): 
+
+
+Processing ProgrammersController#table (for 127.0.0.1 at 2008-12-26 22:13:31) [GET]
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSHOW TABLES[0m
+  Parameters: {"eid"=>"e914074edfcd7f90213dc7e91b0dfd7c", "parent_column"=>"programmers", "nested"=>true, "id"=>nil, "parent_model"=>Project(id: integer, project_name: string)}
+  [4;35;1mSQL (3.6ms)[0m   [0mSELECT count(DISTINCT `programmers`.id) AS count_all FROM `programmers` LEFT OUTER JOIN `assignments` ON (`programmers`.`id` = `assignments`.`programmer_id`) LEFT OUTER JOIN `projects` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `assignments` assignments_programmers ON assignments_programmers.programmer_id = programmers.id LEFT OUTER JOIN `projects` projects_assignments ON `projects_assignments`.id = `assignments_programmers`.project_id WHERE (projects.id = '5') [0m
+  [4;36;1mAssignment Columns (6.3ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+  [4;35;1mProgrammer Load IDs For Limited Eager Loading (2.7ms)[0m   [0mSELECT DISTINCT `programmers`.id FROM `programmers` LEFT OUTER JOIN `assignments` ON (`programmers`.`id` = `assignments`.`programmer_id`) LEFT OUTER JOIN `projects` ON (`projects`.`id` = `assignments`.`project_id`) WHERE (projects.id = '5') ORDER BY programmers.`id` ASC LIMIT 0, 15[0m
+  [4;36;1mProgrammer Load Including Associations (7.7ms)[0m   [0;1mSELECT `programmers`.`id` AS t0_r0, `programmers`.`first_name` AS t0_r1, `programmers`.`last_name` AS t0_r2, `projects`.`id` AS t1_r0, `projects`.`project_name` AS t1_r1, `assignments_programmers`.`id` AS t2_r0, `assignments_programmers`.`project_id` AS t2_r1, `assignments_programmers`.`programmer_id` AS t2_r2, `projects_assignments`.`id` AS t3_r0, `projects_assignments`.`project_name` AS t3_r1 FROM `programmers` LEFT OUTER JOIN `assignments` ON (`programmers`.`id` = `assignments`.`programmer_id`) LEFT OUTER JOIN `projects` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `assignments` assignments_programmers ON assignments_programmers.programmer_id = programmers.id LEFT OUTER JOIN `projects` projects_assignments ON `projects_assignments`.id = `assignments_programmers`.project_id WHERE (projects.id = '5') AND `programmers`.id IN (11) ORDER BY programmers.`id` ASC[0m
+Rendering programmers/list
+Rendered _list_header (22.4ms)
+Rendered _list_column_headings (38.2ms)
+Rendered _messages (1.3ms)
+Rendered _list_actions (31.9ms)
+Rendered _list_record (68.7ms)
+Rendered _list (144.2ms)
+Completed in 293ms (View: 205, DB: 28) | 200 OK [http://localhost/projects/5/nested?_method=get&associations=programmers&adapter=_list_inline_adapter]
+
+
+End of component rendering
+DEPRECATION WARNING: The binding argument of #concat is no longer needed.  Please remove it from your views and helpers.. (called from _run_rhtml_vendor47plugins47active_scaffold47frontends47default47views47_nested46rhtml_locals_nested_object at /home/tuxdistro/Software/rails_projects/m2m_test/m2m/vendor/plugins/active_scaffold/frontends/default/views/_nested.rhtml:40)
+Rendered _nested (505.6ms)
+Rendering _list_inline_adapter
+Rendered _messages (1.8ms)
+Rendered _list_inline_adapter (16.7ms)
+Completed in 578ms (View: 18, DB: 0) | 200 OK [http://localhost/projects/5/nested?_method=get&associations=programmers&adapter=_list_inline_adapter]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProgrammer Columns (4.7ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+
+
+Processing ProgrammersController#nested (for 127.0.0.1 at 2008-12-26 22:13:42) [GET]
+  Parameters: {"eid"=>"e914074edfcd7f90213dc7e91b0dfd7c", "parent_column"=>"programmers", "nested"=>"true", "adapter"=>"_list_inline_adapter", "id"=>"11", "parent_model"=>"Project", "associations"=>"projects"}
+  [4;35;1mProgrammer Load (0.7ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` = 11) [0m
+  [4;36;1mProject Columns (3.7ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+DEPRECATION WARNING: render_component_as_string is deprecated and will be removed from Rails 2.3 (Please install render_component plugin from http://github.com/rails/render_component/tree/master). (called from __send__ at /usr/lib/ruby/gems/1.8/gems/actionpack-2.2.2/lib/action_controller/components.rb:68)
+  [4;35;1mSQL (2.6ms)[0m   [0mSHOW TABLES[0m
+Start rendering component ({:controller=>"projects", :params=>{:eid=>"d88908f4d172de443fa72a571f27bf6c", :parent_column=>"projects", :nested=>true, :parent_model=>Programmer(id: integer, first_name: string, last_name: string)}, :action=>"table"}): 
+
+
+Processing ProjectsController#table (for 127.0.0.1 at 2008-12-26 22:13:42) [GET]
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSHOW TABLES[0m
+  Parameters: {"eid"=>"d88908f4d172de443fa72a571f27bf6c", "parent_column"=>"projects", "nested"=>true, "id"=>nil, "parent_model"=>Programmer(id: integer, first_name: string, last_name: string)}
+  [4;35;1mSQL (3.5ms)[0m   [0mSELECT count(DISTINCT `projects`.id) AS count_all FROM `projects` LEFT OUTER JOIN `assignments` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `programmers` ON (`programmers`.`id` = `assignments`.`programmer_id`) LEFT OUTER JOIN `assignments` assignments_projects ON assignments_projects.project_id = projects.id LEFT OUTER JOIN `programmers` programmers_assignments ON `programmers_assignments`.id = `assignments_projects`.programmer_id WHERE (programmers.id = '11') [0m
+  [4;36;1mAssignment Columns (3.7ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+  [4;35;1mProject Load IDs For Limited Eager Loading (3.7ms)[0m   [0mSELECT DISTINCT `projects`.id FROM `projects` LEFT OUTER JOIN `assignments` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `programmers` ON (`programmers`.`id` = `assignments`.`programmer_id`) WHERE (programmers.id = '11') ORDER BY projects.`id` ASC LIMIT 0, 15[0m
+  [4;36;1mProject Load Including Associations (3.5ms)[0m   [0;1mSELECT `projects`.`id` AS t0_r0, `projects`.`project_name` AS t0_r1, `programmers`.`id` AS t1_r0, `programmers`.`first_name` AS t1_r1, `programmers`.`last_name` AS t1_r2, `assignments_projects`.`id` AS t2_r0, `assignments_projects`.`project_id` AS t2_r1, `assignments_projects`.`programmer_id` AS t2_r2, `programmers_assignments`.`id` AS t3_r0, `programmers_assignments`.`first_name` AS t3_r1, `programmers_assignments`.`last_name` AS t3_r2 FROM `projects` LEFT OUTER JOIN `assignments` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `programmers` ON (`programmers`.`id` = `assignments`.`programmer_id`) LEFT OUTER JOIN `assignments` assignments_projects ON assignments_projects.project_id = projects.id LEFT OUTER JOIN `programmers` programmers_assignments ON `programmers_assignments`.id = `assignments_projects`.programmer_id WHERE (programmers.id = '11') AND `projects`.id IN (2, 5) ORDER BY projects.`id` ASC[0m
+Rendering projects/list
+Rendered _list_header (19.7ms)
+Rendered _list_column_headings (32.0ms)
+Rendered _messages (1.1ms)
+Rendered _list_actions (26.3ms)
+Rendered _list_record (59.9ms)
+Rendered _list_actions (12.8ms)
+Rendered _list_record (37.0ms)
+Rendered _list (164.2ms)
+Completed in 316ms (View: 217, DB: 22) | 200 OK [http://localhost/programmers/11/nested?_method=get&associations=projects&eid=e914074edfcd7f90213dc7e91b0dfd7c&nested=true&parent_column=programmers&parent_model=Project&adapter=_list_inline_adapter]
+
+
+End of component rendering
+DEPRECATION WARNING: The binding argument of #concat is no longer needed.  Please remove it from your views and helpers.. (called from _run_rhtml_vendor47plugins47active_scaffold47frontends47default47views47_nested46rhtml_locals_nested_object at /home/tuxdistro/Software/rails_projects/m2m_test/m2m/vendor/plugins/active_scaffold/frontends/default/views/_nested.rhtml:40)
+Rendered _nested (705.1ms)
+Rendering _list_inline_adapter
+Rendered _messages (1.3ms)
+Rendered _list_inline_adapter (19.3ms)
+Completed in 776ms (View: 20, DB: 0) | 200 OK [http://localhost/programmers/11/nested?_method=get&associations=projects&eid=e914074edfcd7f90213dc7e91b0dfd7c&nested=true&parent_column=programmers&parent_model=Project&adapter=_list_inline_adapter]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProgrammer Columns (4.3ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+
+
+Processing ProgrammersController#row (for 127.0.0.1 at 2008-12-26 22:13:55) [GET]
+  Parameters: {"eid"=>"e914074edfcd7f90213dc7e91b0dfd7c", "parent_column"=>"programmers", "nested"=>"true", "id"=>"11", "parent_model"=>"Project"}
+  [4;35;1mProgrammer Load (1.2ms)[0m   [0mSELECT * FROM `programmers` WHERE (`programmers`.`id` = 11) [0m
+  [4;36;1mProject Columns (4.6ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mSELECT count(*) AS count_all FROM `projects` INNER JOIN assignments ON projects.id = assignments.project_id WHERE ((`assignments`.programmer_id = 11)) [0m
+  [4;36;1mProject Load (1.4ms)[0m   [0;1mSELECT `projects`.* FROM `projects` INNER JOIN assignments ON projects.id = assignments.project_id WHERE ((`assignments`.programmer_id = 11)) [0m
+Rendered _list_actions (13.1ms)
+Rendered _list_record (112.3ms)
+Completed in 156ms (View: 115, DB: 14) | 200 OK [http://localhost/programmers/11/row?_method=get&eid=e914074edfcd7f90213dc7e91b0dfd7c&nested=true&parent_column=programmers&parent_model=Project]
+  [4;35;1mSQL (0.9ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (3.8ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#row (for 127.0.0.1 at 2008-12-26 22:13:57) [GET]
+  Parameters: {"id"=>"5"}
+  [4;35;1mProject Load (0.8ms)[0m   [0mSELECT * FROM `projects` WHERE (`projects`.`id` = 5) [0m
+  [4;36;1mProgrammer Columns (3.8ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mSELECT count(*) AS count_all FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 5)) [0m
+  [4;36;1mProgrammer Load (1.3ms)[0m   [0;1mSELECT `programmers`.* FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 5)) [0m
+Rendered _list_actions (14.1ms)
+Rendered _list_record (103.8ms)
+Completed in 149ms (View: 109, DB: 12) | 200 OK [http://localhost/projects/5/row?_method=get]
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (3.6ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#show_search (for 127.0.0.1 at 2008-12-26 22:14:02) [GET]
+  Parameters: {"adapter"=>"_list_inline_adapter"}
+Rendered _search (15.5ms)
+Rendering _list_inline_adapter
+Rendered _messages (2.1ms)
+Rendered _list_inline_adapter (20.2ms)
+Completed in 92ms (View: 22, DB: 0) | 200 OK [http://localhost/projects/show_search?_method=get&adapter=_list_inline_adapter]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (5.4ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#update_table (for 127.0.0.1 at 2008-12-26 22:14:09) [GET]
+  Parameters: {"commit"=>"Search", "authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "search"=>"1"}
+  [4;35;1mSQL (65.0ms)[0m   [0mSELECT count(DISTINCT `projects`.id) AS count_all FROM `projects` LEFT OUTER JOIN `assignments` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `programmers` ON (`programmers`.`id` = `assignments`.`programmer_id`) WHERE ((LOWER(projects.`project_name`) LIKE '%1%')) [0m
+  [4;36;1mProject Load (2.9ms)[0m   [0;1mSELECT `projects`.* FROM `projects` WHERE ((LOWER(projects.`project_name`) LIKE '%1%')) ORDER BY projects.`id` ASC LIMIT 0, 15[0m
+  [4;35;1mAssignment Load (1.6ms)[0m   [0mSELECT `assignments`.* FROM `assignments` WHERE (`assignments`.project_id IN (1,10)) [0m
+  [4;36;1mAssignment Columns (3.5ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+  [4;35;1mProgrammer Columns (4.0ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProgrammer Load (1.5ms)[0m   [0;1mSELECT * FROM `programmers` WHERE (`programmers`.`id` IN (6,1,2,3,10,4,5)) [0m
+Rendered _list_column_headings (24.8ms)
+Rendered _messages (3.4ms)
+Rendered _list_actions (53.7ms)
+Rendered _list_record (132.5ms)
+Rendered _list_actions (13.5ms)
+Rendered _list_record (37.7ms)
+Rendered _list (237.2ms)
+Completed in 466ms (View: 250, DB: 85) | 200 OK [http://localhost/projects/update_table?authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&search=1&commit=Search]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (3.7ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#update_table (for 127.0.0.1 at 2008-12-26 22:14:18) [GET]
+  Parameters: {"commit"=>"Search", "authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "search"=>"5"}
+  [4;35;1mSQL (2.5ms)[0m   [0mSELECT count(DISTINCT `projects`.id) AS count_all FROM `projects` LEFT OUTER JOIN `assignments` ON (`projects`.`id` = `assignments`.`project_id`) LEFT OUTER JOIN `programmers` ON (`programmers`.`id` = `assignments`.`programmer_id`) WHERE ((LOWER(projects.`project_name`) LIKE '%5%')) [0m
+  [4;36;1mProject Load (1.9ms)[0m   [0;1mSELECT `projects`.* FROM `projects` WHERE ((LOWER(projects.`project_name`) LIKE '%5%')) ORDER BY projects.`id` ASC LIMIT 0, 15[0m
+  [4;35;1mAssignment Load (1.3ms)[0m   [0mSELECT `assignments`.* FROM `assignments` WHERE (`assignments`.project_id = 5) [0m
+  [4;36;1mAssignment Columns (4.7ms)[0m   [0;1mSHOW FIELDS FROM `assignments`[0m
+  [4;35;1mProgrammer Columns (3.9ms)[0m   [0mSHOW FIELDS FROM `programmers`[0m
+  [4;36;1mProgrammer Load (0.8ms)[0m   [0;1mSELECT * FROM `programmers` WHERE (`programmers`.`id` = 11) [0m
+Rendered _list_column_headings (18.7ms)
+Rendered _messages (1.3ms)
+Rendered _list_actions (12.6ms)
+Rendered _list_record (35.4ms)
+Rendered _list (92.9ms)
+Completed in 247ms (View: 105, DB: 20) | 200 OK [http://localhost/projects/update_table?authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&search=5&commit=Search]
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (4.5ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#show (for 127.0.0.1 at 2008-12-26 22:14:29) [GET]
+  Parameters: {"authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "adapter"=>"_list_inline_adapter", "id"=>"5", "search"=>"5"}
+  [4;35;1mProject Load (0.9ms)[0m   [0mSELECT * FROM `projects` WHERE (`projects`.`id` = 5) [0m
+  [4;36;1mProgrammer Columns (9.7ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 5)) [0m
+  [4;36;1mProgrammer Load (0.8ms)[0m   [0;1mSELECT `programmers`.* FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 5)) [0m
+Rendered _show_columns (84.5ms)
+Rendered _show (102.3ms)
+Rendering _list_inline_adapter
+Rendered _messages (1.3ms)
+Rendered _list_inline_adapter (15.3ms)
+Completed in 180ms (View: 17, DB: 0) | 200 OK [http://localhost/projects/5?_method=get&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&search=5&adapter=_list_inline_adapter]
+  [4;35;1mSQL (1.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mProject Columns (9.5ms)[0m   [0;1mSHOW FIELDS FROM `projects`[0m
+
+
+Processing ProjectsController#row (for 127.0.0.1 at 2008-12-26 22:14:32) [GET]
+  Parameters: {"authenticity_token"=>"49fe2af5ba0191559230cf7a3511e7b9c455d041", "id"=>"5", "search"=>"5"}
+  [4;35;1mProject Load (0.8ms)[0m   [0mSELECT * FROM `projects` WHERE (`projects`.`id` = 5) [0m
+  [4;36;1mProgrammer Columns (3.2ms)[0m   [0;1mSHOW FIELDS FROM `programmers`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSELECT count(*) AS count_all FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 5)) [0m
+  [4;36;1mProgrammer Load (0.8ms)[0m   [0;1mSELECT `programmers`.* FROM `programmers` INNER JOIN assignments ON programmers.id = assignments.programmer_id WHERE ((`assignments`.project_id = 5)) [0m
+Rendered _list_actions (13.3ms)
+Rendered _list_record (113.4ms)
+Completed in 165ms (View: 120, DB: 17) | 200 OK [http://localhost/projects/5/row?_method=get&authenticity_token=49fe2af5ba0191559230cf7a3511e7b9c455d041&search=5]

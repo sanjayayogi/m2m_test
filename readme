@@ -1,7 +1,7 @@
 If you would like to be a collaborator on this project please contact:
 sanjaya.yogi@gmail.com
 
-Latest update 200812161650 -3 GMT:
+Latest update 200812262210 -4 GMT:
 TO GET STARTED:
 
 mkdir m2m_test
@@ -33,7 +33,11 @@ ActiveRecord::RecordNotFound (Couldn't find Project with ID=show_search):
 start the app with:
 script/server
 Open a browser to:
+
 http://localhost:3000/programmers
+http://localhost:3000/assignments
+http://localhost:3000/projects
+
 You should see a working active_scaffold view:
 If you click on New, you will see the error generated: code 500, Internal Error.
 
@@ -44,7 +48,6 @@ I usually run the script:
 ./m2m.sh > m2m.txt
 so I can see what it is doing as it starts as well as catch any errors as I try the app.
 
-WHY ?? ANYBODY HAVE ANY IDEAS WHERE I AM GOING WRONG??
 
 BELOW IS HOW THE APP IS STRUCTURED, together with Patch files and modified controllers, etc:
 
@@ -763,7 +766,6 @@ ActionController::Routing::Routes.draw do |map|
 end
 
 
-# m2m.sh
 ## Create a shell script - m2m.sh
 ## THIS WILL LET YOU RAPIDLY BUILD THE APP AND REBUILD IT QUICKLY WHEN YOU WANT
 ## IT ALSO SHOWS ALL THE STEPS THAT YOU ARE TAKING TO BUILD IT
@@ -780,8 +782,6 @@ echo rails m2m
 rails m2m
 echo cp m2m_m1/config/database.m2m_m1.yml ./m2m/config/database.yml
 cp m2m_m1/config/database.m2m_m1.yml ./m2m/config/database.yml
-echo cp m2m_m1/config/routes.rb ./m2m/config/
-cp m2m_m1/config/routes.rb ./m2m/config/
 echo cd ./m2m/
 cd ./m2m/
 echo rake db:drop:all
@@ -818,6 +818,8 @@ echo cp  ../m2m_m1/test/fixtures/*  ./test/fixtures/
 cp  ../m2m_m1/test/fixtures/*  ./test/fixtures/
 echo rake db:fixtures:load
 rake db:fixtures:load
+echo cp ../m2m_m1/config/routes.rb ./config/
+cp ../m2m_m1/config/routes.rb ./config/
 echo script/server
 script/server
 
