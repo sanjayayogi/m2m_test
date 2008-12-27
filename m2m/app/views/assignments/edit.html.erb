@@ -1,0 +1,20 @@
+<h1>Editing assignment</h1>
+
+<% form_for(@assignment) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :project_id %><br />
+    <%= f.text_field :project_id %>
+  </p>
+  <p>
+    <%= f.label :programmer_id %><br />
+    <%= f.text_field :programmer_id %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @assignment %> |
+<%= link_to 'Back', assignments_path %>

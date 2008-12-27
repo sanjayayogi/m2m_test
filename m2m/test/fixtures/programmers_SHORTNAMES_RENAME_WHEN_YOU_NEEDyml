@@ -1,0 +1,64 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# programmers.yml
+# copy to:
+# test/fixtures/programmers.yml
+# test data - loading programmers names to the database
+# keep a copy in folder: m2m_m1/test/fixtures
+# m2m.sh will copy all files in m2m_m1/test/fixtures to m2m/test/fixtures
+# when rebuilding the app from scratch
+# LOAD THE DATA USING:
+# rake db:fixtures:load
+one:
+  id: 1
+  first_name: PF1
+  last_name: PL1
+
+two:
+  id: 2
+  first_name: PF2
+  last_name: PL2
+
+three:
+  id: 3
+  first_name: PF3
+  last_name: PL3
+
+four:
+  id: 4
+  first_name: PF4
+  last_name: PL4
+  
+five:
+  id: 5
+  first_name: PF5
+  last_name: PL5
+
+six:
+  id: 6
+  first_name: PF6
+  last_name: PL6
+  
+seven:
+  id: 7
+  first_name: PF7
+  last_name: PL7
+
+eight:
+  id: 8
+  first_name: PF8
+  last_name: PL8
+  
+nine:
+  id: 9
+  first_name: PF9
+  last_name: PL9
+
+ten:
+  id: 10
+  first_name: PF10
+  last_name: PL10
+  
+eleven:
+  id: 11
+  first_name: PF11
+  last_name: PL11

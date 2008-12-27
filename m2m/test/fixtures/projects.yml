@@ -1,0 +1,50 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# projects.yml
+# copy to:
+# test/fixtures/projects.yml
+# test data - loading projects name to the database
+# keep a copy in folder: m2m_m1/test/fixtures
+# m2m.sh will copy all files in m2m_m1/test/fixtures to m2m/test/fixtures
+# when rebuilding the app from scratch
+# LOAD THE DATA USING:
+# rake db:fixtures:load
+
+one:
+  id: 1
+  project_name: Project_1
+
+two:
+  id: 2
+  project_name: Project_2
+  
+three:
+  id: 3
+  project_name: Project_3
+
+four:
+  id: 4
+  project_name: Project_4
+  
+five:
+  id: 5
+  project_name: Project_5
+
+six:
+  id: 6
+  project_name: Project_6
+  
+seven:
+  id: 7
+  project_name: Project_7
+
+eight:
+  id: 8
+  project_name: Project_8
+  
+nine:
+  id: 9
+  project_name: Project_9
+
+ten:
+  id: 10
+  project_name: Project_10

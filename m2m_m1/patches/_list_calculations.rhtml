@@ -1,0 +1,24 @@
+#_list_calculations.rhtml
+# active_scaffold patch File #1 - _list_calculations.rhtml - makes sum of a colums work properly
+#copy to m2m_m1/patches/_list_calculations.rhtml
+# copy to path: vendor/plugins/active_scaffold/frontends/default/views/_list_calculations.rhtml
+<% display_class = ( @records.kind_of?(Array) ? @records.first : @records ) -%>
+<tr id="<%= active_scaffold_calculations_id %>" class="active-scaffold-calculations">
+  <% active_scaffold_config.list.columns.each do |column| -%>
+    <td>
+         <% if column.calculation? -%>
+        <%
+        calculation = column_calculation(column)
+        override_formatter = "render_#{column.name}_#{column.calculate}"
+        calculation = self.method(override_formatter).call(calculation) if respond_to? override_formatter
+          -%>
+        <%= calculation.to_s -%>
+      <% else -%>
+        &nbsp;
+      <% end -%>    
+    </td>
+  <% end -%>
+  <% unless active_scaffold_config.action_links.empty? -%>
+    <td class="actions">&nbsp;</td>
+  <% end -%>
+</tr>

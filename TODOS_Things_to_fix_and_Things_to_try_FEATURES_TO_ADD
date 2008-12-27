@@ -1,0 +1,58 @@
+TODOS:
+
+Problems Fixed:
+This was fixed by modifying the config/routes.rb with the following (Thank you - Gaffo!)
+ActionController::Routing::Routes.draw do |map|
+ map.resources :programmers, :active_scaffold => true
+
+ map.resources :projects, :active_scaffold => true
+
+ map.resources :assignments, :active_scaffold => true
+
+1. FIX PROBLEM WITH ASSIGNMENT - SELECT NEW OPENS FRAME WITH 
+PROBLEM:
+WHEN THE DROP DOWN LISTS ARE SELECTED AND THE REPLACE WITH EXISTING IS CLICKED NOTHING HAPPENS
+SAME PROBLEM WITH BOTH ExistingProgrammers and ExistingProjects
+_________________________________________________________________________________________________________
+Create Assignment(LABEL)
+
+   1.
+      Programmer (HIDE)
+      First name(LABEL)		   Last name(LABEL)
+      [Data Entry(TEXT BOX)]	   [Data Entry(TEXT BOX)]
+      
+      [Replace with New(BUTTON)]   [select(DROPDOWNLIST-ExistingProgrammers)] [Add Existing(BUTTON)]
+
+      	Remove
+
+   2.
+      Project (hide)
+      Project name
+      [Data Entry(TEXT BOX)]
+
+      [Replace with New(BUTTON)]   [select(DROPDOWNLIST-ExistingProjects)]     [Add Existing(BUTTON)]
+
+      [Create(BUTTON)]	[Cancel]
+
+_________________________________________________________________________________________________________
+ERRORS GENERATED:
+Processing AssignmentsController#show (for 127.0.0.1 at 2008-12-16 22:37:32) [GET]
+  Parameters: {"association"=>"project", "id"=>"edit_associated", "associated_id"=>"1"}
+  Programmer Columns (0.8ms)   SHOW FIELDS FROM `programmers`
+  Project Columns (0.8ms)   SHOW FIELDS FROM `projects`
+  Assignment Load (0.2ms)   SELECT * FROM `assignments` WHERE (`assignments`.`id` = 0)
+
+SOLUTIONS TRIED:
+1. TRY ADDING THE FOLLOWING PLUGIN: DID NOT WORK See the solution above
+DEPENDS on:
+http://paginator.rubyforge.org
+sudo gem install paginator
+
+script/plugin install http://recordselect.googlecode.com/svn/releases/record_select
+DOCUMENTATION:
+http://recordselect.googlecode.com
+http://code.google.com/p/recordselect/wiki/RecordSelectInActiveScaffold
+http://code.google.com/p/recordselect/source/browse/demo
+URLS:
+http://groups.google.com.br/group/activescaffold/browse_thread/thread/6dc4d2bdc57f1684
+

@@ -1,0 +1,828 @@
+If you would like to be a collaborator on this project please contact:
+sanjaya.yogi@gmail.com
+
+Latest update 200812161650 -3 GMT:
+TO GET STARTED:
+
+mkdir m2m_test
+cd m2m_test
+git clone git@github.com:sanjayayogi/m2m_test.git
+
+You may need to delete the m2m_MOST_RECENT if you are going to build the app from scratch because the script will attempt
+to overwrite the previous m2m_MOST_RECENT folder.
+
+I am running Rails 2.2.2 and the latest active_scaffold
+This example will create an active_scaffold at:
+
+http://localhost:3000/programmers #ADD, SHOW, DELETE PROGRAMMERS AND SHOW THEIR 0-MANY PROJECTS
+http://localhost:3000/projects    #ADD, SHOW, DELETE  PROJECTS AND SHOW THEIR 0-MANY PROGRAMMERS
+http://localhost:3000/assignments #ADD, SHOW, DELETE 0-MANY PROGRAMMERS AND THEIR 0-MANY PROJECTS
+                                  #AND ASSIGN PROGRAMMERS TO PROJECTS AND VICE-VERSA
+
+TODOS:
+1. NEED TO ADD THE ABILITY TO PAGE THROUGH MULTIPLE ASSIGNMENTS
+2. SORT COLUMNS PROPERLY -asc desc
+
+HOWEVER WHEN YOU CLICK ON SEARCH IT GENERATES AN ERROR: Request Failed (code 500, Internal Error)
+OTHER PROBLEMS:
+CLICK ON a programmer in the programmers column (http://localhost:3000/projects) and generate the following error:
+Mysql::Error: Unknown column 'assignments_programmers.id' in 'field list': SELECT `programmers`.`id` AS t0_r0, `programmers`.`first_name` AS t0_r1, `programmers`.`last_name` AS t0_r2, `projects`.`id` AS t1_r0, `projects`.`project_name` AS t1_r1, `assignments_programmers`.`id` AS t2_r0, `assignments_programmers`.`project_id` AS t2_r1, `assignments_programmers`.`programmer_id` AS t2_r2, `projects_assignments`.`id` AS t3_r0, `projects_assignments`.`project_name` AS t3_r1 FROM `programmers`  LEFT OUTER JOIN `assignments` ON (`programmers`.`id` = `assignments`.`programmer_id`)  LEFT OUTER JOIN `projects` ON (`projects`.`id` = `assignments`.`project_id`)  LEFT OUTER JOIN `assignments` assignments_programmers ON assignments_programmers.programmer_id = programmers.id  LEFT OUTER JOIN `projects` projects_assignments ON `projects_assignments`.id = `assignments_programmers`.project_id  WHERE (projects.id = '10')  AND  `programmers`.id IN (1, 2, 6, 10)  ORDER BY programmers.`id` ASC
+
+ActiveRecord::RecordNotFound (Couldn't find Project with ID=show_search):
+
+start the app with:
+script/server
+Open a browser to:
+http://localhost:3000/programmers
+You should see a working active_scaffold view:
+If you click on New, you will see the error generated: code 500, Internal Error.
+
+If you want to rebuild the app from scratch, use m2m.sh, it will rebuild everything.
+There is now data in the database - see test/fixtures/.
+
+I usually run the script:
+./m2m.sh > m2m.txt
+so I can see what it is doing as it starts as well as catch any errors as I try the app.
+
+WHY ?? ANYBODY HAVE ANY IDEAS WHERE I AM GOING WRONG??
+
+BELOW IS HOW THE APP IS STRUCTURED, together with Patch files and modified controllers, etc:
+
+## Assuming you are running linux:
+## create some directories to save some files to be 
+## copied into your rails app to set up the many to many relationships between:
+## projects and programmers with relationship stored in a table: assignments
+## BASED ON Josh Susser´s Intro to many to many:
+## http://blog.hasmanythrough.com/2007/1/15/basic-rails-association-cardinality
+
+mkdir m2m_m1
+mkdir m2m_m1/app
+mkdir m2m_m1/app/controllers
+mkdir m2m_m1/app/views
+mkdir m2m_m1/app/views/layouts
+mkdir m2m_m1/app/models
+mkdir m2m_m1/config
+mkdir m2m_m1/db
+mkdir m2m_m1/db/migrate
+mkdir m2m_m1/patches
+
+## create the following files and copy them to the directories in m2m_m1:
+
+#application.rb
+#app/controllers/application.rb 
+## Includes modifications for active_scaffold to ignore :created_at, :updated_at, :lock_version
+# copy to m2m_m1/app/controllers/application.rb
+# Filters added to this controller apply to all controllers in the application.
+# Likewise, all the methods added will be available for all controllers.
+class ApplicationController < ActionController::Base
+  ActiveScaffold.set_defaults do |config| 
+    config.ignore_columns.add [:created_at, :updated_at, :lock_version]
+  end
+  helper :all # include all helpers, all the time
+  # See ActionController::RequestForgeryProtection for details
+  # Uncomment the :secret if you're not using the cookie session store
+  protect_from_forgery # :secret => '7cac277d79cbf3ecd6615ab41ab39f6d'
+  # See ActionController::Base for details 
+  # Uncomment this to filter the contents of submitted sensitive data parameters
+  # from your application log (in this case, all fields with names like "password"). 
+  # filter_parameter_logging :password
+end
+
+class ProjectsController < ApplicationController
+  # GET /projects
+  # GET /projects.xml
+	active_scaffold :project do |config|
+	config.columns = [:project_name, :programmers]
+	config.columns[:programmers].associated_limit = 1000
+	config.columns[:programmers].form_ui = :select
+	list.columns.exclude :assignments
+	end
+end
+
+#programmers_controller.rb
+#app/controllers/programmers_controller.rb
+#copy to m2m_m1/app/controllers/programmers_controller.rb
+# Includes modifications for active_scaffold
+class ProgrammersController < ApplicationController
+  # GET /programmers
+  # GET /programmers.xml
+	active_scaffold :programmer do |config|
+		config.columns = [:first_name, :last_name, :projects]
+ 		config.columns[:projects].associated_limit = 1000
+		config.columns[:projects].form_ui = :select
+		list.columns.exclude :assignments
+	end
+end
+
+class AssignmentsController < ApplicationController
+  # GET /assignments
+  # GET /assignments.xml
+	active_scaffold :assignments
+end
+
+#application.rb
+#app/controllers/application.rb 
+## Includes modifications for active_scaffold to ignore :created_at, :updated_at, :lock_version
+# copy to m2m_m1/app/controllers/application.rb
+# Filters added to this controller apply to all controllers in the application.
+# Likewise, all the methods added will be available for all controllers.
+class ApplicationController < ActionController::Base
+  ActiveScaffold.set_defaults do |config| 
+    config.ignore_columns.add [:created_at, :updated_at, :lock_version]
+  end
+  helper :all # include all helpers, all the time
+  # See ActionController::RequestForgeryProtection for details
+  # Uncomment the :secret if you're not using the cookie session store
+  protect_from_forgery # :secret => '7cac277d79cbf3ecd6615ab41ab39f6d'
+  # See ActionController::Base for details 
+  # Uncomment this to filter the contents of submitted sensitive data parameters
+  # from your application log (in this case, all fields with names like "password"). 
+  # filter_parameter_logging :password
+end
+
+#programmers.html.erb
+## copy to m2m_m1/app/views/layouts/programmers.html.erb
+## modified to include active_scaffold tags
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Programmers: <%= controller.action_name %></title>
+<%= javascript_include_tag :defaults %>
+<%= active_scaffold_includes %>
+</head>
+<body>
+
+<p style="color: green"><%= flash[:notice] %></p>
+
+<%= yield  %>
+
+</body>
+</html>
+
+
+# projects.html.erb
+## copy to m2m_m1/app/views/layouts/projects.html.erb
+## modified to include active_scaffold tags
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Projects: <%= controller.action_name %></title>
+<%= javascript_include_tag :defaults %>
+<%= active_scaffold_includes %>
+</head>
+<body>
+
+<p style="color: green"><%= flash[:notice] %></p>
+
+<%= yield  %>
+
+</body>
+</html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Assignments: <%= controller.action_name %></title>
+<%= javascript_include_tag :defaults %>
+<%= active_scaffold_includes %>
+</head>
+<body>
+
+<p style="color: green"><%= flash[:notice] %></p>
+
+<%= yield  %>
+
+</body>
+</html>
+
+## Create 3 models:
+
+# Model #1
+# assignment.rb
+# copy to  m2m_m1/app/models/assignment.rb
+## Sets up a many to many relationship for programmer and project
+## Assignment table holds relationships of programmers and projects
+class Assignment < ActiveRecord::Base
+  belongs_to :programmer  # foreign key - programmer_id
+  belongs_to :project     # foreign key - project_id
+end
+
+# Model #2
+#programmer.rb
+# copy to  m2m_m1/app/models/programmer.rb
+## Sets up a many to many relationship for programmer and project
+## programmer have many projects and projects have many programmers
+class Programmer < ActiveRecord::Base
+  has_many :assignments
+  has_many :projects, :through => :assignments
+    def to_label
+    "#{first_name} #{last_name}"
+  end
+end
+
+# Model #3
+# project.rb
+# copy to  m2m_m1/app/models/project.rb
+## Sets up a many to many relationship for programmer and project
+## programmer have many projects and projects have many programmers
+class Project < ActiveRecord::Base
+  has_many :assignments
+  has_many :programmers, :through => :assignments
+      def to_label
+    "#{project_name}"
+  end
+end
+## Assuming you are using mysql for your database:
+## copy database.m2m_m1.yml > config/database.yml
+## modify with your mysql user and password and correct paths
+
+# database.m2m_m1.yml
+#m2m_m1/config/database.m2m_m1.yml
+# MySQL.  Versions 4.1 and 5.0 are recommended.
+#
+# Install the MySQL driver:
+#   gem install mysql
+# On Mac OS X:
+#   sudo gem install mysql -- --with-mysql-dir=/usr/local/mysql
+# On Mac OS X Leopard:
+#   sudo env ARCHFLAGS="-arch i386" gem install mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config
+#       This sets the ARCHFLAGS environment variable to your native architecture
+# On Windows:
+#   gem install mysql
+#       Choose the win32 build.
+#       Install MySQL and put its /bin directory on your path.
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+development:
+  adapter: mysql
+  database: m2m_development
+  pool: 5
+  username: root
+  password: dataface
+
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  adapter: mysql
+  database: m2m_test
+  pool: 5
+  username: root
+  password: dataface
+
+
+production:
+  adapter: mysql
+  database: m2m_production
+  pool: 5
+  username: root
+  password: dataface
+
+## create some files for the database migrations to create the necessary tables
+## the tables are: programmers, projects, and assignments for the joins
+## these migration files will replace the ones created when you use:
+## script/generate model and script generate scaffold
+
+#20081210012504_create_assignments.rb
+# copy to m2m_m1/db/migrate/20081210012504_create_assignments.rb
+class CreateAssignments < ActiveRecord::Migration
+  def self.up
+    create_table :assignments do |t|
+      t.integer :project_id, :null => false
+      t.integer :programmer_id, :null => false
+    end
+  end
+
+  def self.down
+    drop_table :assignments
+  end
+end
+
+#20081210012402_create_projects.rb
+# copy to m2m_m1/db/migrate/20081210012402_create_projects.rb
+class CreateProjects < ActiveRecord::Migration
+  def self.up
+    create_table :projects do |t|
+      t.string :project_name, :null => false
+    end
+  end
+
+  def self.down
+    drop_table :projects
+  end
+end
+
+#20081210141651_create_programmers.rb
+# copy to m2m_m1/db/migrate/20081210141651_create_programmers.rb
+class CreateProgrammers < ActiveRecord::Migration
+  def self.up
+    create_table :programmers do |t|
+      t.string :first_name, :null => false
+      t.string :last_name, :null => false
+    end
+  end
+
+  def self.down
+    drop_table :programmers
+  end
+end
+
+## copy the following files to the directory m2m_m1/patches
+
+
+
+## create 3 patch files for active_scaffold and copy to m2m_m1/patches
+## NOTE: THESE ARE PATCHES I HAVE FOUND I NEED TO MAKE ACTIVE_SCAFFOLD WORK IN CERTAIN SITUATIONS
+## IF YOU DON´T NEED THEM - DO NOT USE THEM
+
+#_list_calculations.rhtml
+# active_scaffold patch File #1 - _list_calculations.rhtml - makes sum of a colums work properly
+#copy to m2m_m1/patches/_list_calculations.rhtml
+# copy to path: vendor/plugins/active_scaffold/frontends/default/views/_list_calculations.rhtml
+<% display_class = ( @records.kind_of?(Array) ? @records.first : @records ) -%>
+<tr id="<%= active_scaffold_calculations_id %>" class="active-scaffold-calculations">
+  <% active_scaffold_config.list.columns.each do |column| -%>
+    <td>
+         <% if column.calculation? -%>
+        <%
+        calculation = column_calculation(column)
+        override_formatter = "render_#{column.name}_#{column.calculate}"
+        calculation = self.method(override_formatter).call(calculation) if respond_to? override_formatter
+          -%>
+        <%= calculation.to_s -%>
+      <% else -%>
+        &nbsp;
+      <% end -%>    
+    </td>
+  <% end -%>
+  <% unless active_scaffold_config.action_links.empty? -%>
+    <td class="actions">&nbsp;</td>
+  <% end -%>
+</tr>
+
+# name_option_for_datetime.rb
+## active_scaffold patch File #2 - name_option_for_datetime.rb
+#save to patches/name_option_for_datetime.rb
+#copy to path:  vendor/plugins/active_scaffold/lib/extensions/name_option_for_datetime.rb
+module ActionView
+  module Helpers
+    class InstanceTag
+      private
+      # patch in support for options[:name]
+      def datetime_selector_with_name(options, html_options)
+        datetime = value(object) || default_datetime(options)
+
+        options = options.dup
+        options[:field_name]           = @method_name
+        options[:include_position]     = true
+        options[:prefix]             ||= @object_name
+        options[:index]              ||= @auto_index
+        options[:datetime_separator] ||= ' &mdash; '
+        options[:time_separator]     ||= ' : '
+        options.merge(:prefix => options[:name].dup.insert(-2, "(#{options[:position]}i)")) if options[:name]
+
+        DateTimeSelector.new(datetime, options.merge(:tag => true), html_options)
+      end
+      alias_method_chain :datetime_selector, :name
+    end
+  end
+end
+
+# show_column_helpers.rb
+# File #3 - show_column_helpers.rb
+# copy to m2m_m1/patches/show_column_helpers.rb
+# copy PATCH to vendor/plugins/active_scaffold/lib/active_scaffold/helpers/show_column_helpers.rb
+module ActiveScaffold
+  module Helpers
+    # Helpers that assist with the rendering of a List Column
+    module ShowColumnHelpers
+      def show_column_value(record, column)
+        # check for an override helper
+        if show_column_override? column
+          # we only pass the record as the argument. we previously also passed the formatted_value,
+          # but mike perham pointed out that prohibited the usage of overrides to improve on the
+          # performance of our default formatting. see issue #138.
+          send(show_column_override(column), record)
+        # second, check if the dev has specified a valid list_ui for this column
+        elsif column.list_ui and override_show_column_ui?(column.list_ui)
+          send(override_show_column_ui(column.list_ui), column, record)
+        else
+          if override_show_column_ui?(column.column.class)
+            send(override_show_column_ui(column.column.class), column, record)
+          else
+            get_column_value(record, column)
+          end
+        end
+      end
+
+      def active_scaffold_show_text(column, record)
+        simple_format(get_column_value(record, column))
+      end
+
+      def show_column_override(column)
+        "#{column.name.to_s.gsub('?', '')}_show_column" # parse out any question marks (see issue 227)
+      end
+
+      def show_column_override?(column)
+        respond_to?(show_column_override(column))
+      end
+
+      def override_show_column_ui?(list_ui)
+        respond_to?(override_show_column_ui(list_ui))
+      end
+
+      # the naming convention for overriding show types with helpers
+      def override_show_column_ui(list_ui)
+        "active_scaffold_show_#{list_ui}"
+      end
+    end
+  end
+end
+
+## BUILD SOME TEST DATA and STORE IN: 
+## test/fixtures
+## FOR TESTING PURPOSES
+## LOAD THE DATA USING:
+## rake db:fixtures:load
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# assignments.yml
+# copy to:
+# test/fixtures/assignments.yml
+# test data - linking programmers to projects
+# keep a copy in folder: m2m_m1/test/fixtures
+# m2m.sh will copy all files in m2m_m1/test/fixtures to m2m/test/fixtures
+# when rebuilding the app from scratch
+# LOAD THE DATA USING:
+# rake db:fixtures:load
+
+one:
+  project_id: 1
+  programmer_id: 1
+
+two:
+  project_id: 1
+  programmer_id: 2
+  
+three:
+  project_id: 1
+  programmer_id: 3
+  
+four:
+  project_id: 1
+  programmer_id: 4
+  
+five:
+  project_id: 1
+  programmer_id: 5
+  
+six:
+  project_id: 2
+  programmer_id: 1
+  
+seven:
+  project_id: 2
+  programmer_id: 2
+  
+eight:
+  project_id: 3
+  programmer_id: 3
+  
+nine:
+  project_id: 4
+  programmer_id: 1
+  
+ten:
+  project_id: 4
+  programmer_id: 3
+  
+eleven:
+  project_id: 4
+  programmer_id: 5
+  
+twelve:
+  project_id: 6
+  programmer_id: 1
+  
+thirteen:
+  project_id: 6
+  programmer_id: 7
+  
+fourteen:
+  project_id: 7
+  programmer_id: 6
+  
+fifteen:
+  project_id: 8
+  programmer_id: 2
+  
+sixteen:
+  project_id: 8
+  programmer_id: 3
+
+seventeen:
+  project_id: 8
+  programmer_id: 4
+
+eighteen:
+  project_id: 8
+  programmer_id: 5
+  
+nineteen:
+  project_id: 8
+  programmer_id: 6
+  
+twenty:
+  project_id: 9
+  programmer_id: 1
+  
+twenty-one:
+  project_id: 9
+  programmer_id: 2
+
+twenty-two:
+  project_id: 9
+  programmer_id: 8
+  
+twenty-three:
+  project_id: 9
+  programmer_id: 4
+  
+twenty-four:
+  project_id: 9
+  programmer_id: 5
+  
+twenty-five:
+  project_id: 9
+  programmer_id: 6
+  
+twenty-six:
+  project_id: 9
+  programmer_id: 9
+  
+twenty-seven:
+  project_id: 10
+  programmer_id: 1
+  
+twenty-eight:
+  project_id: 10
+  programmer_id: 2
+  
+twenty-nine:
+  project_id: 10
+  programmer_id: 6
+  
+thirty:
+  project_id: 10
+  programmer_id: 10
+  
+thirty-one:
+  project_id: 5
+  programmer_id: 11
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# programmers.yml
+# copy to:
+# test/fixtures/programmers.yml
+# test data - loading programmers names to the database
+# keep a copy in folder: m2m_m1/test/fixtures
+# m2m.sh will copy all files in m2m_m1/test/fixtures to m2m/test/fixtures
+# when rebuilding the app from scratch
+# LOAD THE DATA USING:
+# rake db:fixtures:load
+one:
+  id: 1
+  first_name: ProgrammerFirst_1
+  last_name: ProgrammerLast_1
+
+two:
+  id: 2
+  first_name: ProgrammerFirst_2
+  last_name: ProgrammerLast_2
+
+three:
+  id: 3
+  first_name: ProgrammerFirst_3
+  last_name: ProgrammerLast_3
+
+four:
+  id: 4
+  first_name: ProgrammerFirst_4
+  last_name: ProgrammerLast_4
+  
+five:
+  id: 5
+  first_name: ProgrammerFirst_5
+  last_name: ProgrammerLast_5
+
+six:
+  id: 6
+  first_name: ProgrammerFirst_6
+  last_name: ProgrammerLast_6
+  
+seven:
+  id: 7
+  first_name: ProgrammerFirst_7
+  last_name: ProgrammerLast_7
+
+eight:
+  id: 8
+  first_name: ProgrammerFirst_8
+  last_name: ProgrammerLast_8
+  
+nine:
+  id: 9
+  first_name: ProgrammerFirst_9
+  last_name: ProgrammerLast_9
+
+ten:
+  id: 10
+  first_name: ProgrammerFirst_10
+  last_name: ProgrammerLast_10
+  
+eleven:
+  id: 11
+  first_name: ProgrammerFirst_11
+  last_name: ProgrammerLast_11
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# projects.yml
+# copy to:
+# test/fixtures/projects.yml
+# test data - loading projects name to the database
+# keep a copy in folder: m2m_m1/test/fixtures
+# m2m.sh will copy all files in m2m_m1/test/fixtures to m2m/test/fixtures
+# when rebuilding the app from scratch
+# LOAD THE DATA USING:
+# rake db:fixtures:load
+
+one:
+  id: 1
+  project_name: Project_1
+
+two:
+  id: 2
+  project_name: Project_2
+  
+three:
+  id: 3
+  project_name: Project_3
+
+four:
+  id: 4
+  project_name: Project_4
+  
+five:
+  id: 5
+  project_name: Project_5
+
+six:
+  id: 6
+  project_name: Project_6
+  
+seven:
+  id: 7
+  project_name: Project_7
+
+eight:
+  id: 8
+  project_name: Project_8
+  
+nine:
+  id: 9
+  project_name: Project_9
+
+ten:
+  id: 10
+  project_name: Project_10
+
+## routes.rb (modified)
+## Modifications to the config/routes.rb (for active_scaffold to work globally)
+## copy from m2m_m1/config/routes.rb m2m/config/routes.rb
+## Change the top of your routes to be:
+## Reply on GitHub: http://github.com/inbox/43673#reply
+ActionController::Routing::Routes.draw do |map|
+ map.resources :programmers, :active_scaffold => true
+
+ map.resources :projects, :active_scaffold => true
+
+ map.resources :assignments, :active_scaffold => true
+
+  # The priority is based upon order of creation: first created -> highest priority.
+
+  # Sample of regular route:
+  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
+  # Keep in mind you can assign values other than :controller and :action
+
+  # Sample of named route:
+  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
+  # This route can be invoked with purchase_url(:id => product.id)
+
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   map.resources :products
+
+  # Sample resource route with options:
+  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+
+  # Sample resource route with sub-resources:
+  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+  
+  # Sample resource route with more complex sub-resources
+  #   map.resources :products do |products|
+  #     products.resources :comments
+  #     products.resources :sales, :collection => { :recent => :get }
+  #   end
+
+  # Sample resource route within a namespace:
+  #   map.namespace :admin do |admin|
+  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
+  #     admin.resources :products
+  #   end
+
+  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
+  # map.root :controller => "welcome"
+
+  # See how all your routes lay out with "rake routes"
+
+  # Install the default routes as the lowest priority.
+  # Note: These default routes make all actions in every controller accessible via GET requests. You should
+  # consider removing the them or commenting them out if you're using named routes and resources.
+  map.connect ':controller/:action/:id'
+  map.connect ':controller/:action/:id.:format'
+end
+
+
+# m2m.sh
+## Create a shell script - m2m.sh
+## THIS WILL LET YOU RAPIDLY BUILD THE APP AND REBUILD IT QUICKLY WHEN YOU WANT
+## IT ALSO SHOWS ALL THE STEPS THAT YOU ARE TAKING TO BUILD IT
+## IT ASSUMES THAT YOU WILL USE A FOLDER m2m_m1 WHICH CONTAINS FILES THAT YOU HAVE ALREADY CREATED TO
+## CREATE YOUR MODELS, CONTROLLERS, AND VIEWS TO USE active_scaffold
+## IT WILL BACKUP WHAT YOU CREATE TO m2m_MOST_RECENT (WHICH WILL OVERWRITE ANY PREVIOUS VERSIONS)
+## THE SCRIPT ECHOES WHAT IT IS DOING
+
+
+# m2m.sh
+echo mv m2m m2m_MOST_RECENT
+mv m2m m2m_MOST_RECENT
+echo rails m2m
+rails m2m
+echo cp m2m_m1/config/database.m2m_m1.yml ./m2m/config/database.yml
+cp m2m_m1/config/database.m2m_m1.yml ./m2m/config/database.yml
+echo cp m2m_m1/config/routes.rb ./m2m/config/
+cp m2m_m1/config/routes.rb ./m2m/config/
+echo cd ./m2m/
+cd ./m2m/
+echo rake db:drop:all
+rake db:drop:all
+echo rake db:create:all
+rake db:create:all
+echo script/generate scaffold Assignment project_id:integer programmer_id:integer
+script/generate scaffold Assignment project_id:integer programmer_id:integer
+echo script/generate scaffold Project project_id:integer project_name:string
+script/generate scaffold Project id:integer project_name:string
+echo script/generate scaffold Programmer programmer_id:integer first_name:string last_name:string
+script/generate scaffold Programmer id:integer first_name:string last_name:string
+echo rm db/migrate/*
+rm db/migrate/*
+echo cp ../m2m_m1/db/migrate/* db/migrate/
+cp ../m2m_m1/db/migrate/* db/migrate/
+echo rake db:migrate
+rake db:migrate
+echo script/plugin install git://github.com/activescaffold/active_scaffold.git
+script/plugin install git://github.com/activescaffold/active_scaffold.git
+echo cp ../m2m_m1/patches/_list_calculations.rhtml ./vendor/plugins/active_scaffold/frontends/default/views/_list_calculations.rhtml 
+cp ../m2m_m1/patches/_list_calculations.rhtml ./vendor/plugins/active_scaffold/frontends/default/views/_list_calculations.rhtml 
+echo ../m2m_m1/patches/name_option_for_datetime.rb ./vendor/plugins/active_scaffold/lib/extensions/name_option_for_datetime.rb
+cp ../m2m_m1/patches/name_option_for_datetime.rb ./vendor/plugins/active_scaffold/lib/extensions/name_option_for_datetime.rb
+echo cp ../m2m_m1/patches/show_column_helpers.rb vendor/plugins/active_scaffold/lib/active_scaffold/helpers/show_column_helpers.rb
+cp ../m2m_m1/patches/show_column_helpers.rb vendor/plugins/active_scaffold/lib/active_scaffold/helpers/show_column_helpers.rb
+echo cp ../m2m_m1/app/models/* ./app/models/
+cp ../m2m_m1/app/models/* ./app/models/
+echo cp ../m2m_m1/app/controllers/* ./app/controllers/
+cp ../m2m_m1/app/controllers/* ./app/controllers/
+echo cp  ../m2m_m1/app/views/layouts/*  ./app/views/layouts/
+cp  ../m2m_m1/app/views/layouts/*  ./app/views/layouts/
+echo cp  ../m2m_m1/test/fixtures/*  ./test/fixtures/
+cp  ../m2m_m1/test/fixtures/*  ./test/fixtures/
+echo rake db:fixtures:load
+rake db:fixtures:load
+echo script/server
+script/server
+
+## MAKE THE SHELL SCRIPT EXECUTABLE
+chmod +x m2m.sh
+
+## RUN IT WITH ./m2m.sh > m2m.txt 
+## OPEN m2m.txt and you can see the OUTPUT WITH ANY ERRORS GENERATED

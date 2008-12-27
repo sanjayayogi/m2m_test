@@ -1,0 +1,136 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# assignments.yml
+# copy to:
+# test/fixtures/assignments.yml
+# test data - linking programmers to projects
+# keep a copy in folder: m2m_m1/test/fixtures
+# m2m.sh will copy all files in m2m_m1/test/fixtures to m2m/test/fixtures
+# when rebuilding the app from scratch
+# LOAD THE DATA USING:
+# rake db:fixtures:load
+
+one:
+  project_id: 1
+  programmer_id: 1
+
+two:
+  project_id: 1
+  programmer_id: 2
+  
+three:
+  project_id: 1
+  programmer_id: 3
+  
+four:
+  project_id: 1
+  programmer_id: 4
+  
+five:
+  project_id: 1
+  programmer_id: 5
+  
+six:
+  project_id: 2
+  programmer_id: 1
+  
+seven:
+  project_id: 2
+  programmer_id: 2
+  
+eight:
+  project_id: 3
+  programmer_id: 3
+  
+nine:
+  project_id: 4
+  programmer_id: 1
+  
+ten:
+  project_id: 4
+  programmer_id: 3
+  
+eleven:
+  project_id: 4
+  programmer_id: 5
+  
+twelve:
+  project_id: 6
+  programmer_id: 1
+  
+thirteen:
+  project_id: 6
+  programmer_id: 7
+  
+fourteen:
+  project_id: 7
+  programmer_id: 6
+  
+fifteen:
+  project_id: 8
+  programmer_id: 2
+  
+sixteen:
+  project_id: 8
+  programmer_id: 3
+
+seventeen:
+  project_id: 8
+  programmer_id: 4
+
+eighteen:
+  project_id: 8
+  programmer_id: 5
+  
+nineteen:
+  project_id: 8
+  programmer_id: 6
+  
+twenty:
+  project_id: 9
+  programmer_id: 1
+  
+twenty-one:
+  project_id: 9
+  programmer_id: 2
+
+twenty-two:
+  project_id: 9
+  programmer_id: 8
+  
+twenty-three:
+  project_id: 9
+  programmer_id: 4
+  
+twenty-four:
+  project_id: 9
+  programmer_id: 5
+  
+twenty-five:
+  project_id: 9
+  programmer_id: 6
+  
+twenty-six:
+  project_id: 9
+  programmer_id: 9
+  
+twenty-seven:
+  project_id: 10
+  programmer_id: 1
+  
+twenty-eight:
+  project_id: 10
+  programmer_id: 2
+  
+twenty-nine:
+  project_id: 10
+  programmer_id: 6
+  
+thirty:
+  project_id: 10
+  programmer_id: 10
+  
+thirty-one:
+  project_id: 5
+  programmer_id: 11
+
+
